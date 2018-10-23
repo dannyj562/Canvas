@@ -27,10 +27,6 @@ class CanvasViewController: UIViewController {
         
         trayUp = CGPoint(x: trayView.center.x, y: view.frame.height/2.0 + trayView.frame.height/2.0 + 50)
         trayDown = CGPoint(x: trayView.center.x, y: trayView.center.y + trayDownOffset)
-    
-        print("UI Height \(view.frame.height)")
-        print("TrayUp value \(trayUp)")
-        print("TrayDown value \(trayDown)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +70,9 @@ class CanvasViewController: UIViewController {
             self.newlyCreatedFace.center = imageView.center
             self.newlyCreatedFace.center.y += trayView.frame.origin.y
             newlyCreatedFaceOriginalCenter = newlyCreatedFace.center
+            let tapGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didTap(sender:)))
+            newlyCreatedFace.isUserInteractionEnabled = true
+            newlyCreatedFace.addGestureRecognizer(tapGestureRecognizer)
             self.newlyCreatedFace.transform = CGAffineTransform(scaleX: 3, y: 3)
         }
         else if sender.state == .changed {
@@ -82,9 +81,23 @@ class CanvasViewController: UIViewController {
         else if sender.state == .ended {
             self.newlyCreatedFace.transform = CGAffineTransform.identity
         }
-        
     }
     
+
+    @objc func didTap(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        if sender.state == .began {
+            newlyCreatedFace = sender.view as! UIImageView
+            newlyCreatedFaceOriginalCenter = newlyCreatedFace.center
+            self.newlyCreatedFace.transform = CGAffineTransform(scaleX: 3, y: 3)
+        }
+        else if sender.state == .changed {
+            newlyCreatedFace.center = CGPoint(x: newlyCreatedFaceOriginalCenter.x + translation.x, y: newlyCreatedFaceOriginalCenter.y + translation.y)
+        }
+        else if sender.state == .ended {
+            self.newlyCreatedFace.transform = CGAffineTransform.identity
+        }
+    }
     
     
     /*
