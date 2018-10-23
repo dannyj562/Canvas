@@ -2,24 +2,24 @@
 
 **Canvas** is an app that allows users to use gestures in order to create fun pictures using a variety of images.
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
 The following **required** user stories are complete:
 
-- [ ] Add and Configure View Elements (+1pt)
-- [ ] User can use a pan gesture to move the position of the tray (+1pt)
-- [ ] The tray will continue to the up or down position based on the direction the user was last panning (+1pt)
-- [ ] User can use a pan gesture to drag faces from the image tray to the canvas (+1pt)
-- [ ] User can pan faces on the canvas (+1pt)
+- [x] Add and Configure View Elements (+1pt)
+- [x] User can use a pan gesture to move the position of the tray (+1pt)
+- [x] The tray will continue to the up or down position based on the direction the user was last panning (+1pt)
+- [x] User can use a pan gesture to drag faces from the image tray to the canvas (+1pt)
+- [x] User can pan faces on the canvas (+1pt)
 
 The following **stretch** user stories are implemented:
 
-- [ ] Tray bounces when returning to it's up or down positions (+1pt)
-- [ ] User sees as new face scale up and back down to simulate a "picking up and dropping" appearance (+1pt)
-- [ ] User can use a pinch gesture to scale faces up or down (+1pt)
-- [ ] User can use a rotation gesture to rotate the position of faces on the canvas (+1pt)
+- [x] Tray bounces when returning to it's up or down positions (+1pt)
+- [x] User sees as new face scale up and back down to simulate a "picking up and dropping" appearance (+1pt)
+- [x] User can use a pinch gesture to scale faces up or down (+1pt)
+- [x] User can use a rotation gesture to rotate the position of faces on the canvas (+1pt)
 - [ ] User sees the tray arrow adjust to point up or down in relation to the position of the tray (+1pt)
 - [ ] If the user releases a face in the tray area, the face animates back to it's original position on the tray (+1pt)
 - [ ] User can use a double tap gesture to delete a face (+1pt)
@@ -27,7 +27,7 @@ The following **stretch** user stories are implemented:
 - [ ] App tray features custom images (different from the supplied image assets) (+1pt)
 - [ ] User can choose between different canvas backgrounds (+1pt)
 - [ ] User can can swipe horizontally in the image tray to access more images (+1pt)
-- User can snap a photo to create...
+- [ ] User can snap a photo to create...
 - [ ] a custom canvas background (1pt)
 - [ ] custom images in the image tray (1pt)
 - [ ] User can double tab the canvas to "reset" the Canvas (1pt)
@@ -43,7 +43,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/qsMzMjifRz.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
