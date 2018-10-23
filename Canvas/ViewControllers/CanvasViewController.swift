@@ -63,6 +63,10 @@ class CanvasViewController: UIViewController {
         let velocity = sender.velocity(in: view)
         let translation = sender.translation(in: view)
         
+        let tapGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didTapFace(sender:)))
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinchFace(sender:)))
+        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(didRotateFace(sender:)))
+        
         if sender.state == .began {
             let imageView = sender.view as! UIImageView
             self.newlyCreatedFace = UIImageView(image: imageView.image)
@@ -70,34 +74,69 @@ class CanvasViewController: UIViewController {
             self.newlyCreatedFace.center = imageView.center
             self.newlyCreatedFace.center.y += trayView.frame.origin.y
             newlyCreatedFaceOriginalCenter = newlyCreatedFace.center
-            let tapGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didTap(sender:)))
             newlyCreatedFace.isUserInteractionEnabled = true
             newlyCreatedFace.addGestureRecognizer(tapGestureRecognizer)
+            newlyCreatedFace.addGestureRecognizer(pinchGestureRecognizer)
+            newlyCreatedFace.addGestureRecognizer(rotationGestureRecognizer)
             self.newlyCreatedFace.transform = CGAffineTransform(scaleX: 3, y: 3)
-        }
-        else if sender.state == .changed {
+        } else if sender.state == .changed {
             newlyCreatedFace.center = CGPoint(x: newlyCreatedFaceOriginalCenter.x + translation.x, y: newlyCreatedFaceOriginalCenter.y + translation.y)
-        }
-        else if sender.state == .ended {
+        } else if sender.state == .ended {
             self.newlyCreatedFace.transform = CGAffineTransform.identity
         }
     }
     
 
-    @objc func didTap(sender: UIPanGestureRecognizer) {
+    @objc func didTapFace(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
         if sender.state == .began {
             newlyCreatedFace = sender.view as! UIImageView
             newlyCreatedFaceOriginalCenter = newlyCreatedFace.center
             self.newlyCreatedFace.transform = CGAffineTransform(scaleX: 3, y: 3)
-        }
-        else if sender.state == .changed {
+        } else if sender.state == .changed {
             newlyCreatedFace.center = CGPoint(x: newlyCreatedFaceOriginalCenter.x + translation.x, y: newlyCreatedFaceOriginalCenter.y + translation.y)
-        }
-        else if sender.state == .ended {
+        } else if sender.state == .ended {
             self.newlyCreatedFace.transform = CGAffineTransform.identity
         }
     }
+    
+    @objc func didPinchFace(sender: UIPinchGestureRecognizer) {
+        if sender.state == .began {
+            newlyCreatedFace = sender.view as! UIImageView
+            let currentScale = self.newlyCreatedFace.frame.size.width / self.newlyCreatedFace.bounds.size.width
+            let newScale = currentScale*sender.scale
+            let transform = CGAffineTransform(scaleX: newScale, y: newScale)
+            self.newlyCreatedFace.transform = transform
+        } else if sender.state == .changed {
+            let currentScale = self.newlyCreatedFace.frame.size.width / self.newlyCreatedFace.bounds.size.width
+            var newScale = currentScale*sender.scale
+            if sender.scale < 1 {
+                newScale = 1
+            } else if sender.scale >= 10 {
+                newScale = 10
+            }
+            let transform = CGAffineTransform(scaleX: newScale, y: newScale)
+            self.newlyCreatedFace.transform = transform
+        } else if sender.state == .ended {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.newlyCreatedFace.transform = CGAffineTransform.identity
+            })
+        }
+    }
+    
+    @objc func didRotateFace(sender: UIRotationGestureRecognizer) {
+        let currentAngle = CGFloat(45 * (CGFloat(Double.pi) / 180))
+        let newAngle = currentAngle + sender.rotation
+        if sender.state == .began {
+            newlyCreatedFace = sender.view as! UIImageView
+            newlyCreatedFace.transform = CGAffineTransform(rotationAngle: newAngle)
+        } else if sender.state == .changed {
+            newlyCreatedFace.transform = CGAffineTransform(rotationAngle: newAngle)
+        } else if sender.state == .ended {
+            self.newlyCreatedFace.transform = CGAffineTransform.identity
+        }
+    }
+    
     
     
     /*
